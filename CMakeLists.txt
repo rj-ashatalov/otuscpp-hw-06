@@ -5,16 +5,16 @@ function(add_executable_from_dir TARGET SRC_DIR)
     add_executable(${TARGET} ${TARGET_SRC})
 endfunction()
 
-project(ip_filter VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
+project(matrix VERSION 0.0.$ENV{TRAVIS_BUILD_NUMBER})
 
 find_package(Threads REQUIRED)
-find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+find_package(Boost COMPONENTS unit_test_framework RE QUIRED)
 
 configure_file(version.h.in ${PROJECT_SOURCE_DIR}/version.h)
 
 add_executable_from_dir(${PROJECT_NAME} src)
 
-add_executable(test_version tests/test_version.cpp src/ip_filter.h)
+add_executable(test_version tests/test_version.cpp src/matrix.h)
 
 add_library(patch_version lib.cpp)
 
