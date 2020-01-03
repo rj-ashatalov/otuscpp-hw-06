@@ -27,6 +27,7 @@ int main(int, char const* [])
 //    std::cout<<matrix[0][1]<<std::endl;
 //    std::cout<<matrix[0][2]<<std::endl;
 
+//    В текущей реализации можно параметризировать только простыми типами
 //    Matrix<std::string, 3, "empty"> matrix2;
 //    std::cout<<matrix2[0][0][1]<<std::endl;
 //    matrix2[0][0][1] = "some text";
@@ -73,7 +74,7 @@ int main(int, char const* [])
         std::cout << std::endl;
     }
 
-    std::cout << "Count of felled cells: " << matrix.size() << std::endl;
+    std::cout << "Count of filled cells: " << matrix.size() << std::endl;
 
     for (auto [key, value] : matrix)
     {
