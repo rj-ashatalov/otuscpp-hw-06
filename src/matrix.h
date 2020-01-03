@@ -79,6 +79,16 @@ class Matrix
             return _values.size();
         }
 
+        constexpr auto begin() noexcept
+        {
+            return _values.begin();
+        }
+
+        constexpr auto end() noexcept
+        {
+            return _values.end();
+        }
+
     private:
         std::map<key_type, value_type> _values;
 

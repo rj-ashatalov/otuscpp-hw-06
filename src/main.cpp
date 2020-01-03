@@ -1,8 +1,23 @@
 #include <vector>
 #include <iostream>
 #include "matrix.h"
+#include <sstream>
 
 static int N = 10;
+
+template <class T>
+std::string toString(const T& src)
+{
+    if (src.size() <= 0) {
+        return "[]";
+    }
+
+    std::stringstream output;
+    output << "[";
+    std::copy(src.begin(), std::prev(src.end()), std::ostream_iterator<typename std::remove_reference_t<T>::value_type>(output, ", "));
+    output << src.back() << "]";
+    return output.str();
+}
 
 int main(int, char const* [])
 {
@@ -56,6 +71,13 @@ int main(int, char const* [])
             std::cout << matrix[i][j] << " ";
         }
         std::cout << std::endl;
+    }
+
+    std::cout << "Count of felled cells: " << matrix.size() << std::endl;
+
+    for (auto [key, value] : matrix)
+    {
+        std::cout << "Position:" << toString(key) << "\tValue: " << value <<  std::endl;
     }
 
     return 0;
