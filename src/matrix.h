@@ -100,7 +100,15 @@ class Matrix
             auto it = _values.find(key);
             if (it == _values.end())
             {
+                if(value == TDef)
+                {
+                    return;
+                }
                 _values.emplace(key, value);
+            }
+            else if(value == TDef)
+            {
+                _values.erase(it);
             }
             else
             {
