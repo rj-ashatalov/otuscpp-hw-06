@@ -74,6 +74,11 @@ class Matrix
             return Proxy<TSize - 1>{*this, std::move(key)};
         };
 
+        size_t size()
+        {
+            return _values.size();
+        }
+
     private:
         std::map<key_type, value_type> _values;
 
