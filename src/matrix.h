@@ -4,7 +4,7 @@
 #include <array>
 #include <map>
 
-template<class T, size_t TSize, class TDef>
+template<typename T, size_t TSize, T TDef>
 class Matrix
 {
         using matrix_type = Matrix<T, TSize, TDef>;
@@ -12,16 +12,11 @@ class Matrix
         using key_type = std::array<size_t, TSize>;
 
     public:
-        class IMatrixItem
-        {
-
-        };
-
         template<size_t USize>
         class Proxy
         {
             public:
-                Proxy(const matrix_type& matrix, key_type&& key)
+                Proxy(matrix_type& matrix, key_type&& key)
                         : _matrix(matrix)
                         , _key(std::move(key))
                 {
@@ -30,10 +25,10 @@ class Matrix
                 auto operator[](size_t index)
                 {
                     _key[TSize - USize] = index;
-                    return Proxy<USize - 1>{_matrix, _key};
+                    return Proxy<USize - 1>{_matrix, std::move(_key)};
                 };
             private:
-                const matrix_type& _matrix;
+                matrix_type& _matrix;
                 key_type _key;
         };
 
@@ -41,25 +36,25 @@ class Matrix
         class Proxy<0>
         {
             public:
-                Proxy(const matrix_type& matrix, key_type&& key)
+                Proxy(matrix_type& matrix, key_type&& key)
                         : _matrix(matrix)
                         , _key(std::move(key))
                 {
                 };
 
-                operator value_type() const
+                operator value_type()
                 {
                     return _matrix.Get(_key);
                 }
 
-                Proxy<0> operator=(const value_type& value)
+                auto operator=(const value_type& value)
                 {
                     _matrix.Set(_key, value);
                     return *this;
                 }
 
             private:
-                const matrix_type& _matrix;
+                matrix_type& _matrix;
                 key_type _key;
         };
 
@@ -82,19 +77,11 @@ class Matrix
     private:
         std::map<key_type, value_type> _values;
 
-        class Iterator
-        {
-        };
-
-        class Key
-        {
-        };
-
         value_type Get(const key_type& key)
         {
             if (_values.find(key) == _values.end())
             {
-                return TDef{};////TODO @a.shatalov: неправильно, надо доработать
+                return TDef;
             }
             else
             {
@@ -106,16 +93,12 @@ class Matrix
         {
             if (_values.find(key) == _values.end())
             {
-                //
+                _values.emplace(key, value);
             }
-            _values[key] = value;
+            else
+            {
+                _values[key] = value;
+            }
         };
-
-//        template <class ...Args>
-//        value_type GetValue(Args...args)
-//        {
-//            _map[]
-//        }
-
 };
 
