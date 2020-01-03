@@ -58,14 +58,8 @@ class Matrix
                 key_type _key;
         };
 
-        Matrix()
-        {
-
-        };
-
-        virtual ~Matrix()
-        {
-        };
+        Matrix() = default;
+        virtual ~Matrix() = default;
 
         auto operator[](size_t index)
         {
