@@ -2,6 +2,7 @@
 #include <iostream>
 #include "matrix.h"
 #include <sstream>
+#include <iterator>
 
 static int N = 10;
 
