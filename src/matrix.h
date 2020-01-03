@@ -79,25 +79,27 @@ class Matrix
 
         value_type Get(const key_type& key)
         {
-            if (_values.find(key) == _values.end())
+            auto it = _values.find(key);
+            if (it == _values.end())
             {
                 return TDef;
             }
             else
             {
-                return _values[key];
+                return it->second;
             }
         };
 
         void Set(const key_type& key, const value_type& value)
         {
-            if (_values.find(key) == _values.end())
+            auto it = _values.find(key);
+            if (it == _values.end())
             {
                 _values.emplace(key, value);
             }
             else
             {
-                _values[key] = value;
+                it->second = value;
             }
         };
 };
